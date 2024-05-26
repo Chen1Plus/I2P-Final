@@ -45,7 +45,7 @@ void AlGame::Core::initialize() {
         if (!al_init_acodec_addon()) throw Error("Allegro audio codec initialization failed");
         if (!al_install_keyboard()) throw Error("Allegro keyboard initialization failed");
         if (!al_install_mouse()) throw Error("Allegro mouse initialization failed");
-        // TODO(1plus): Solve the magic number
+        // TODO: Solve the magic number and add documentation.
         if (!al_reserve_samples(1000)) throw Error("Allegro audio sample reservation failed");
         // Enable antialias by linear interpolation.
         al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR);

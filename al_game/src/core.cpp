@@ -35,20 +35,13 @@ void AlGame::Core::initialize() {
     }
 
     // Allegro initialization
-    {
-        if (!al_init()) throw Error("Allegro initialization failed");
-        if (!al_init_primitives_addon()) throw Error("Allegro primitives initialization failed");
-        if (!al_init_image_addon()) throw Error("Allegro image initialization failed");
-        if (!al_init_font_addon()) throw Error("Allegro font initialization failed");
-        if (!al_init_ttf_addon()) throw Error("Allegro TTF initialization failed");
-        if (!al_install_audio()) throw Error("Allegro audio initialization failed");
-        if (!al_init_acodec_addon()) throw Error("Allegro audio codec initialization failed");
-        if (!al_install_keyboard()) throw Error("Allegro keyboard initialization failed");
-        if (!al_install_mouse()) throw Error("Allegro mouse initialization failed");
-        // TODO: Solve the magic number and add documentation.
-        if (!al_reserve_samples(1000)) throw Error("Allegro audio sample reservation failed");
+    if (al_init() && al_init_primitives_addon() && al_init_image_addon() && al_init_font_addon() &&
+        al_init_ttf_addon() && al_install_audio() && al_init_acodec_addon() &&
+        al_install_keyboard() && al_install_mouse() && al_reserve_samples(RESERVE_SAMPLES)) {
         // Enable antialias by linear interpolation.
         al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR);
         Slog->debug("Allegro initialized");
+    } else {
+        throw Error("Allegro initialization failed");
     }
 }

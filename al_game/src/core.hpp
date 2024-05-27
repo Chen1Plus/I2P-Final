@@ -11,6 +11,9 @@ namespace AlGame::Core {
 /// Logger
 inline std::unique_ptr<spdlog::logger> Slog;
 
+// [Allegro] Max capacity for audio sample instance.
+inline const int RESERVE_SAMPLES = 1000;
+
 void initialize();
 }  // namespace AlGame::Core
 #endif  // CORE_HPP

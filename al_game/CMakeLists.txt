@@ -10,11 +10,11 @@ find_package(spdlog REQUIRED)
 find_package(Allegro REQUIRED)
 
 # [main] target
-FILE(GLOB SRC ${CMAKE_SOURCE_DIR}/src/*.cpp)
+FILE(GLOB SRC ./src/*.cpp)
 add_library(${PROJECT_NAME} STATIC ${SRC})
 # [main] include directories
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/include)
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(${PROJECT_NAME} PUBLIC include)
+target_include_directories(${PROJECT_NAME} PRIVATE src)
 # [main] link libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE
         spdlog::spdlog

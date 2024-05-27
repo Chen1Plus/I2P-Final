@@ -51,9 +51,6 @@ struct Vec2Int {
         return *this;
     }
 };
-constexpr auto operator*(int lhs, const Vec2Int& rhs) -> Vec2Int {
-    return {lhs * rhs.x, lhs * rhs.y};
-}
 
 struct Vec2 {
     float x, y;
@@ -107,8 +104,5 @@ struct Vec2 {
         return *this;
     }
 };
-constexpr auto operator*(float lhs, const Vec2& rhs) -> Vec2 {
-    return {lhs * rhs.x, lhs * rhs.y};
-}
 }  // namespace AlGame
 #endif  // VEC2_HPP

@@ -14,6 +14,8 @@ inline auto* FontPath   = "assets/fonts/";
 inline auto* BitmapPath = "assets/images/";
 inline auto* SamplePath = "assets/sounds/";
 
+/// Initialize the asset manager.
+/// @note This function should only be called once.
 void initialize();
 
 auto getFont(const char* name, int size) -> std::shared_ptr<ALLEGRO_FONT>;

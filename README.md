@@ -25,5 +25,5 @@
 目前進度：簡易2d、簡易Engine、scene、簡易text
 
 ## Contribute
-首先讓cmake能定位到包，推薦vcpkg或自己找其他包管理器
+首先讓cmake能定位到包，推薦vcpkg或自己找其他包管理器  
 格式化、代碼規範大致上遵循clang-tidy和clang-format

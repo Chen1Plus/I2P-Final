@@ -10,8 +10,8 @@ class Scene {
 
     virtual void onKeyDown(int keyCode) {};
     virtual void onKeyUp(int keyCode) {};
-    virtual void onMouseDown(int btn, Vec2Int pos) {};
-    virtual void onMouseUp(int btn, Vec2Int pos) {};
+    virtual void onMouseDown(unsigned btn, Vec2Int pos) {};
+    virtual void onMouseUp(unsigned btn, Vec2Int pos) {};
     virtual void onMouseMove(Vec2Int pos) {};
     virtual void onMouseScroll(Vec2Int pos, int delta) {};
 };

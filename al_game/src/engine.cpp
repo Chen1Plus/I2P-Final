@@ -19,8 +19,9 @@ using AlGame::Engine;
 using AlGame::Log::Slog;
 using std::shared_ptr;
 
+static bool Initialized = false;
 void Engine::initialize() {
-    if (initialized) return;
+    if (Initialized) return;
 
     AlGame::Log::initialize();
     AlGame::Asset::initialize();
@@ -36,7 +37,7 @@ void Engine::initialize() {
         throw Error("Allegro initialization failed");
     }
 
-    initialized = true;
+    Initialized = true;
 }
 
 auto Engine::getInstance() -> Engine& {
@@ -64,8 +65,89 @@ void Engine::createWindow(const char* title, Vec2Int size) {
     al_start_timer(timer.get());
 }
 
-auto Engine::getEvent() -> ALLEGRO_EVENT {
+void Engine::run() {
+    Slog->info("Start looping");
+    bool done   = false;
+    int redraws = 0;
+
     ALLEGRO_EVENT event;
-    al_wait_for_event(eventQueue.get(), &event);
-    return event;
+    auto timestamp = std::chrono::steady_clock::now();
+    while (!done) {
+        al_wait_for_event(eventQueue.get(), &event);
+        switch (event.type) {
+            case ALLEGRO_EVENT_DISPLAY_CLOSE:
+                Slog->trace("Window close button clicked");
+                done = true;
+                break;
+
+            // Event for redrawing the display.
+            case ALLEGRO_EVENT_TIMER:
+                if (event.timer.source == timer.get()) redraws++;
+                break;
+
+            case ALLEGRO_EVENT_KEY_DOWN:
+                Slog->trace("Key with keycode {} down", event.keyboard.keycode);
+                scenes[currentScene]->onKeyDown(event.keyboard.keycode);
+                break;
+
+            case ALLEGRO_EVENT_KEY_UP:
+                Slog->trace("Key with keycode {} up", event.keyboard.keycode);
+                scenes[currentScene]->onKeyUp(event.keyboard.keycode);
+                break;
+
+            case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+                // Event for mouse key down.
+                Slog->trace("Mouse button {} down at ({}, {})", event.mouse.button, event.mouse.x,
+                            event.mouse.y);
+                scenes[currentScene]->onMouseDown(event.mouse.button,
+                                                  {event.mouse.x, event.mouse.y});
+                break;
+
+            case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+
+                Slog->trace("Mouse button {} up at ({}, {})", event.mouse.button, event.mouse.x,
+                            event.mouse.y);
+                scenes[currentScene]->onMouseUp(event.mouse.button, {event.mouse.x, event.mouse.y});
+                break;
+
+            case ALLEGRO_EVENT_MOUSE_AXES:
+                if (event.mouse.dx != 0 || event.mouse.dy != 0) {
+                    // Event for mouse move.
+                    Slog->trace("Mouse move to ({}, {})", event.mouse.x, event.mouse.y);
+                    scenes[currentScene]->onMouseMove({event.mouse.x, event.mouse.y});
+                } else if (event.mouse.dz != 0) {
+                    // Event for mouse scroll.
+                    Slog->trace("Mouse scroll at ({}, {}) with delta {}", event.mouse.x,
+                                event.mouse.y, event.mouse.dz);
+                    scenes[currentScene]->onMouseScroll({event.mouse.x, event.mouse.y},
+                                                        event.mouse.dz);
+                }
+                break;
+
+            case ALLEGRO_EVENT_MOUSE_LEAVE_DISPLAY:
+                Slog->trace("Mouse leave display.");
+                scenes[currentScene]->onMouseMove(Vec2Int(-1));
+                break;
+
+            case ALLEGRO_EVENT_MOUSE_ENTER_DISPLAY: Slog->trace("Mouse enter display."); break;
+
+            // ignore other events
+            default: break;
+        }
+
+        // Redraw the scene.
+        if (redraws > 0 && al_is_event_queue_empty(eventQueue.get())) {
+            if (redraws > 1) Slog->warn("Frame drop: {}", redraws - 1);
+
+            // Calculate the timeElapsed and update the timestamp.
+            auto nextTimestamp = std::chrono::steady_clock::now();
+            auto timeElapsed   = nextTimestamp - timestamp;
+            timestamp          = nextTimestamp;
+            // Update and draw the next frame.
+            scenes[currentScene]->update(timeElapsed.count());
+            scenes[currentScene]->draw();
+            redraws = 0;
+        }
+    }
+    Slog->info("Stop looping");
 }

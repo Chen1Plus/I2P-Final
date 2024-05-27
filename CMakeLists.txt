@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project(final VERSION 0.1.0 LANGUAGES CXX)
+project(I2P-Final VERSION 0.1.0 LANGUAGES CXX)
 
 # language standard
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

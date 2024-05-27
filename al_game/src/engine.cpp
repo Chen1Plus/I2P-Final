@@ -163,7 +163,9 @@ void Engine::run(const std::string& firstScene) {
             timestamp          = nextTimestamp;
             // Update and draw the next frame.
             scenes[currentScene]->update(timeElapsed.count());
+            al_clear_to_color(al_map_rgb(0, 0, 0));
             scenes[currentScene]->draw();
+            al_flip_display();
             redraws = 0;
         }
     }

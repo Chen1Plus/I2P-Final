@@ -13,8 +13,43 @@ struct Vec2Int {
 
     constexpr auto operator+(const Vec2Int& rhs) const -> Vec2Int { return {x + rhs.x, y + rhs.y}; }
     constexpr auto operator-(const Vec2Int& rhs) const -> Vec2Int { return {x - rhs.x, y - rhs.y}; }
+    constexpr auto operator*(const Vec2Int& rhs) const -> Vec2Int { return {x * rhs.x, y * rhs.y}; }
+    constexpr auto operator/(const Vec2Int& rhs) const -> Vec2Int { return {x / rhs.x, y / rhs.y}; }
+
     constexpr auto operator*(int rhs) const -> Vec2Int { return {x * rhs, y * rhs}; }
     constexpr auto operator/(int rhs) const -> Vec2Int { return {x / rhs, y / rhs}; }
+
+    constexpr auto operator+=(const Vec2Int& rhs) -> Vec2Int& {
+        x += rhs.x;
+        y += rhs.y;
+        return *this;
+    }
+    constexpr auto operator-=(const Vec2Int& rhs) -> Vec2Int& {
+        x -= rhs.x;
+        y -= rhs.y;
+        return *this;
+    }
+    constexpr auto operator*=(const Vec2Int& rhs) -> Vec2Int& {
+        x *= rhs.x;
+        y *= rhs.y;
+        return *this;
+    }
+    constexpr auto operator/=(const Vec2Int& rhs) -> Vec2Int& {
+        x /= rhs.x;
+        y /= rhs.y;
+        return *this;
+    }
+
+    constexpr auto operator*=(int rhs) -> Vec2Int& {
+        x *= rhs;
+        y *= rhs;
+        return *this;
+    }
+    constexpr auto operator/=(int rhs) -> Vec2Int& {
+        x /= rhs;
+        y /= rhs;
+        return *this;
+    }
 };
 constexpr auto operator*(int lhs, const Vec2Int& rhs) -> Vec2Int {
     return {lhs * rhs.x, lhs * rhs.y};

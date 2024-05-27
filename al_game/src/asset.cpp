@@ -35,7 +35,7 @@ auto AlGame::Asset::getFont(const char* name, int size) -> shared_ptr<ALLEGRO_FO
     if (Fonts->contains(path)) return Fonts->at(path);
     Slog->debug("Asset<Font> Loading {}", path);
 
-    auto ft = shared_ptr<ALLEGRO_FONT>(al_load_font((string(FontPath) + path).c_str(), size, 0),
+    auto ft = shared_ptr<ALLEGRO_FONT>(al_load_font((string(FontPath) + name).c_str(), size, 0),
                                        al_destroy_font);
     if (ft == nullptr) throw Error("Asset<Font> Failed to load " + path);
     Fonts->insert({path, ft});

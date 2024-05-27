@@ -30,7 +30,7 @@ class Engine {
    public:
     Engine(Engine const&)                    = delete;
     auto operator=(Engine const&) -> Engine& = delete;
-    static auto getInstance() -> Engine&;
+    static auto instance() -> Engine&;
 
     void createWindow(const char* title, Vec2Int size);
     void addScene(std::string name, std::unique_ptr<Scene>);

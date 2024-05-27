@@ -40,9 +40,10 @@ void Engine::initialize() {
     }
 
     Initialized = true;
+    Slog->info("Engine initialized");
 }
 
-auto Engine::getInstance() -> Engine& {
+auto Engine::instance() -> Engine& {
     initialize();
     static Engine Instance;
     return Instance;

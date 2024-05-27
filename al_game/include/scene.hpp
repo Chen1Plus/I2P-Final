@@ -1,0 +1,19 @@
+#ifndef SCENE_HPP
+#define SCENE_HPP
+#include "vec2.hpp"
+namespace AlGame {
+class Scene {
+   public:
+    virtual ~Scene()                   = default;
+    virtual void update(int deltaTime) = 0;
+    virtual void draw()                = 0;
+
+    virtual void onKeyDown(int keyCode) {};
+    virtual void onKeyUp(int keyCode) {};
+    virtual void onMouseDown(int btn, Vec2Int pos) {};
+    virtual void onMouseUp(int btn, Vec2Int pos) {};
+    virtual void onMouseMove(Vec2Int pos) {};
+    virtual void onMouseScroll(Vec2Int pos, int delta) {};
+};
+}  // namespace AlGame
+#endif  // SCENE_HPP

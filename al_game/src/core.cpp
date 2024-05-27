@@ -20,11 +20,11 @@ void AlGame::Core::initialize() {
     // Slog initialization
     {
         using namespace spdlog;
-        std::ofstream ofs("logs/AlGame.log", std::ios::out);
+        std::ofstream ofs(LOG_PATH, std::ios::out);
         ofs.close();
         Slog = std::make_unique<logger>(
             logger("AlGame", {std::make_shared<sinks::stdout_color_sink_st>(),
-                              std::make_shared<sinks::basic_file_sink_st>("logs/AlGame.log")}));
+                              std::make_shared<sinks::basic_file_sink_st>(LOG_PATH)}));
 #ifdef _DEBUG
         Slog->set_level(level::trace);
 #else

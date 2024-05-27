@@ -10,6 +10,7 @@
 namespace AlGame::Core {
 /// Logger
 inline std::unique_ptr<spdlog::logger> Slog;
+inline const auto LOG_PATH = "logs/AlGame.log";
 
 // [Allegro] Max capacity for audio sample instance.
 inline const int RESERVE_SAMPLES = 1000;

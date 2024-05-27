@@ -5,7 +5,6 @@
 #include "log.hpp"
 
 inline AlGame::Error::Error(const char* msg) noexcept : std::runtime_error(msg) {
-    AlGame::Log::initialize();
     AlGame::Log::Slog->critical(msg);
 }
 

@@ -11,7 +11,8 @@ namespace AlGame::Log {
 inline std::unique_ptr<spdlog::logger> Slog;
 /// The path to the log file.
 inline const auto PATH = "logs/AlGame.log";
-/// Initialize the logger. Safe to call multiple times, but usually done once at program start.
+/// Initialize the logger.
+/// @note This function should only be called once.
 void initialize();
 }  // namespace AlGame::Log
 #endif

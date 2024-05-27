@@ -7,11 +7,8 @@
 #include <fstream>
 #include <memory>
 
-static bool Initialized = false;
 void AlGame::Log::initialize() {
-    if (Initialized) return;
     using namespace spdlog;
-
     std::ofstream ofs(PATH, std::ios::out);
     ofs.close();
     Slog = std::make_unique<logger>(

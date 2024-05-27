@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 # dependencies
 find_package(spdlog REQUIRED)
+find_package(EnTT REQUIRED)
 add_subdirectory(al_game)
 
 # [main] target
@@ -17,4 +18,4 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/al_game/include)
 # [main] link libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE al_game)
-target_link_libraries(${PROJECT_NAME} PRIVATE spdlog::spdlog)
+target_link_libraries(${PROJECT_NAME} PRIVATE spdlog::spdlog EnTT::EnTT)

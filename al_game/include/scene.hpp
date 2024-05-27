@@ -1,12 +1,16 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
+
+#include <cstdint>
+
 #include "vec2.hpp"
+
 namespace AlGame {
 class Scene {
    public:
-    virtual ~Scene()                   = default;
-    virtual void update(int deltaTime) = 0;
-    virtual void draw()                = 0;
+    virtual ~Scene()                       = default;
+    virtual void update(int64_t deltaTime) = 0;
+    virtual void draw()                    = 0;
 
     virtual void onKeyDown(int keyCode) {};
     virtual void onKeyUp(int keyCode) {};

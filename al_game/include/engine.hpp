@@ -14,7 +14,7 @@ namespace AlGame {
 class Engine {
     Engine() = default;
     // screen config
-    const int fps = 60;
+    const unsigned fps = 60;
     Vec2Int screenSize;
     // screen resources
     std::shared_ptr<ALLEGRO_DISPLAY> display;
@@ -23,6 +23,7 @@ class Engine {
     // scenes
     std::map<std::string, std::unique_ptr<Scene>> scenes;
     std::string currentScene;
+    std::string nextScene;
 
     static void initialize();
 
@@ -33,8 +34,8 @@ class Engine {
 
     void createWindow(const char* title, Vec2Int size);
     void addScene(std::string name, std::unique_ptr<Scene>);
-    void changeScene(std::string name);
-    void run();
+    void changeScene(const std::string& name);
+    void run(const std::string& firstScene);
 };
 }  // namespace AlGame
 #endif  // ENGINE_HPP

@@ -9,6 +9,8 @@
 #include <allegro5/allegro_ttf.h>
 
 #include <memory>
+#include <string>
+#include <utility>
 
 #include "asset.hpp"
 #include "error.hpp"
@@ -65,14 +67,30 @@ void Engine::createWindow(const char* title, Vec2Int size) {
     al_start_timer(timer.get());
 }
 
-void Engine::run() {
+void Engine::addScene(std::string name, std::unique_ptr<Scene> scene) {
+    Slog->info("Add scene: \"{}\"", name);
+    scenes.insert({std::move(name), std::move(scene)});
+}
+
+void Engine::changeScene(const std::string& name) {
+    if (scenes.contains(name)) {
+        Slog->info("Change scene to \"{}\"", name);
+        nextScene = name;
+    } else
+        throw Error("Scene \"" + name + "\" not found");
+}
+
+void Engine::run(const std::string& firstScene) {
     Slog->info("Start looping");
-    bool done   = false;
-    int redraws = 0;
+    bool done    = false;
+    int redraws  = 0;
+    currentScene = firstScene;
+    nextScene    = firstScene;
 
     ALLEGRO_EVENT event;
     auto timestamp = std::chrono::steady_clock::now();
     while (!done) {
+        currentScene = nextScene;
         al_wait_for_event(eventQueue.get(), &event);
         switch (event.type) {
             case ALLEGRO_EVENT_DISPLAY_CLOSE:

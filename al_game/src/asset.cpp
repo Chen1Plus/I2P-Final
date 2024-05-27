@@ -8,12 +8,12 @@
 #include <memory>
 #include <string>
 
-#include "core.hpp"
 #include "error.hpp"
+#include "log.hpp"
 #include "vec2.hpp"
 
 using AlGame::Error;
-using AlGame::Core::Slog;
+using AlGame::Log::Slog;
 using std::map;
 using std::shared_ptr;
 using std::string;
@@ -24,6 +24,7 @@ static std::unique_ptr<map<string, shared_ptr<ALLEGRO_BITMAP>>> Bitmaps;
 static std::unique_ptr<map<string, shared_ptr<ALLEGRO_SAMPLE>>> Samples;
 
 void AlGame::Asset::initialize() {
+    Log::initialize();
     Fonts   = std::make_unique<map<string, shared_ptr<ALLEGRO_FONT>>>();
     Bitmaps = std::make_unique<map<string, shared_ptr<ALLEGRO_BITMAP>>>();
     Samples = std::make_unique<map<string, shared_ptr<ALLEGRO_SAMPLE>>>();

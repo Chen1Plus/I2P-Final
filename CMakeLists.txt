@@ -8,7 +8,6 @@ set(CMAKE_CXX_STANDARD 20)
 # dependencies
 find_package(spdlog REQUIRED)
 find_package(EnTT REQUIRED)
-find_package(Allegro REQUIRED)
 add_subdirectory(al_game)
 
 # [main] target
@@ -16,16 +15,4 @@ FILE(GLOB SRC ${CMAKE_SOURCE_DIR}/src/*.cpp)
 add_executable(${PROJECT_NAME} ${SRC})
 # [main] link libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE al_game)
-target_link_libraries(${PROJECT_NAME} PRIVATE
-        spdlog::spdlog
-        EnTT::EnTT
-        Allegro::allegro
-        Allegro::allegro_acodec
-        Allegro::allegro_audio
-        Allegro::allegro_dialog
-        Allegro::allegro_font
-        Allegro::allegro_image
-        Allegro::allegro_main
-        Allegro::allegro_primitives
-        Allegro::allegro_ttf
-)
+target_link_libraries(${PROJECT_NAME} PRIVATE spdlog::spdlog EnTT::EnTT)
